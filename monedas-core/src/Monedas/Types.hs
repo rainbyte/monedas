@@ -9,12 +9,13 @@ import qualified Data.Set as Set
 
 type Amount = Integer
 type Balance = M.Map Currency Amount
+type ConsistencyRule = Ledger -> STM Bool
 
 -- Note: their names should be unique!
 newtype Currency = Currency { currName :: Text }
-    deriving (Eq, Ord)
+    deriving (Eq, Ord, Show)
 newtype User = User { userName :: Text }
-    deriving (Eq, Ord)
+    deriving (Eq, Ord, Show)
 
 data Account
     = AccUser User
