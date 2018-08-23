@@ -12,6 +12,7 @@
 1. API usage examples are provided in this section.
 1. Install `httpie` to test them.
 1. Run the server before testing the API.
+1. Users and currencies must be created *before* using them!
 
 ### Create a new currency
 
