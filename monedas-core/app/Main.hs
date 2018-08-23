@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Monedas.API
 
 main :: IO ()
-main = putStrLn "hello monedas-core"
+main = server
