@@ -35,8 +35,11 @@ inspectLedger ledger = do
 
 userBalances :: Ledger -> STM (M.Map User Balance)
 userBalances ledger = do
+    users <- readTVar (ledgerUsers ledger)
     entries <- readTVar (ledgerEntries ledger)
-    pure $ sumDeltas $ Data.Foldable.concatMap entryDeltas entries
+    let sums = sumDeltas $ Data.Foldable.concatMap entryDeltas entries
+        zeros = M.fromSet (const M.empty) users
+    pure $ M.union sums zeros
   where
     entryDeltas :: DoubleEntry -> [(User, Currency, Amount)]
     entryDeltas DoubleEntry {..} =
