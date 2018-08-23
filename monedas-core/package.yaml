@@ -25,6 +25,7 @@ dependencies:
 - bytestring
 - containers
 - http-types
+- scientific
 - stm
 - text
 - wai

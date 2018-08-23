@@ -1,13 +1,14 @@
 module Monedas.Types where
 
 import Control.Concurrent.STM
+import Data.Scientific
 import Data.Text
 
 import qualified Data.Map as M
 import qualified Data.Sequence as Seq
 import qualified Data.Set as Set
 
-type Amount = Integer
+type Amount = Scientific
 type Balance = M.Map Currency Amount
 type ConsistencyRule = Ledger -> STM Bool
 
