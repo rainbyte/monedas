@@ -26,11 +26,19 @@ ruleAllCurrenciesExist = \ledger -> do
         checkBalances bs = all valid $ M.keys bs
     pure $ all checkBalances balances
 
+ruleAllUsersExist :: ConsistencyRule
+ruleAllUsersExist = \ledger -> do
+    balances <- userBalances ledger
+    users <- readTVar (ledgerUsers ledger)
+    let valid user = user `Set.member` users
+    pure $ all valid $ M.keys balances
+
 setupConsistency :: Ledger -> IO ()
 setupConsistency ledger = do
     atomically $ mapM_ setupRule
         [ (ruleNoNegativeBalances, "Balance should not be negative")
         , (ruleAllCurrenciesExist, "Currency does not exist")
+        , (ruleAllUsersExist, "User does not exist")
         ]
   where
     setupRule (rule, msg) = alwaysSucceeds $ do
